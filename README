@@ -1,7 +1,7 @@
 ##### 1 #####
 #ВИРТУАЛЬНОЕ ОКРУЖЕНИЕ
-Создать виртуальное окружение получилось только при помощи обращение в файлу установленному по пути: C:\Users\user\AppData\Local\Programs\Python\Python312\python.exe
-Сама команда:& "C:\Users\user\AppData\Local\Programs\Python\Python312\python.exe" -m venv venv
+Создать виртуальное окружение получилось только при помощи обращение в файлу установленному по пути: C:\Users\Дима\AppData\Local\Programs\Python\Python312\python.exe
+Сама команда:& "C:\Users\Дима\AppData\Local\Programs\Python\Python312\python.exe" -m venv venv
 После чего ошибка о политике выполнения скриптов, выполни (один раз): Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 После чего - активируем приложение: .\venv\Scripts\Activate.ps1
 

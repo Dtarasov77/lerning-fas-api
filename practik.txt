@@ -1,0 +1,90 @@
+###### Задание 1 — Классы и объекты (Этап 1.1) ######
+Создать класс User с атрибутами name, email, age.
+Методы:
+  - greet() — возвращает строку приветствия
+  - is_adult() — возвращает True если возраст >= 18
+
+# Правильное выполнение:
+class User:
+    def __init__(self, name, age, email):
+        self.name = name
+        self.age = age
+        self.email = email
+
+    def greet(self):
+        return f"Привет! Меня зовут {self.name}, мне {self.age} лет. Связаться: {self.email}"
+
+    def is_adult(self):
+        return self.age >= 18
+
+dima = User("Дима", 30, "example@mail.ru")
+masha = User("Маша", 26, "example1@mail.ru")
+anya = User("Аня", 16, "example3@mail.ru")
+
+print(dima.greet())       # Привет! Меня зовут Дима, мне 30 лет. Связаться: example@mail.ru
+print(anya.is_adult())    # False
+
+# Замечания при проверке:
+# 1. Класс назвать User (ед. число), а не Users
+# 2. Метод is_adult, а не is_audit (опечатка)
+# 3. return self.age >= 18 — без обёртки в if/else
+# 4. Имена переменных на латинице (dima, не Дима)
+
+
+###### Задание 2 — Инкапсуляция (Этап 1.2) ######
+Создать класс BankAccount с приватными атрибутами:
+  - __balance (начальное значение передаётся в конструктор)
+  - __owner (имя владельца)
+  - __history (пустой список операций)
+Методы:
+  - deposit(amount) — пополнить счёт, проверить что сумма > 0, записать в историю
+  - withdraw(amount) — снять деньги, проверить сумма > 0 И хватает средств, записать в историю
+  - balance — @property, только чтение
+  - owner — @property, только чтение
+  - get_history() — возвращает копию истории
+
+# Правильное выполнение:
+class BankAccount:
+    def __init__(self, owner, balance):
+        self.__balance = balance
+        self.__owner = owner
+        self.__history = []
+
+    def deposit(self, amount):
+        if amount <= 0:
+            raise ValueError("Сумма должна быть больше 0")
+        self.__balance += amount
+        self.__history.append(f"Пополнение: +{amount} руб.")
+
+    def withdraw(self, amount):
+        if amount <= 0:
+            raise ValueError("Сумма должна быть больше 0")
+        if self.__balance < amount:
+            raise ValueError(f"Недостаточно средств. Баланс: {self.__balance} руб.")
+        self.__balance -= amount
+        self.__history.append(f"Снятие: -{amount} руб.")
+
+    @property
+    def balance(self):
+        return self.__balance
+
+    @property
+    def owner(self):
+        return self.__owner
+
+    def get_history(self):
+        return self.__history.copy()
+
+account = BankAccount("Дима", 1000)
+account.deposit(500)
+account.withdraw(200)
+print(account.balance)        # 1300
+print(account.owner)          # Дима
+print(account.get_history())  # ['Пополнение: +500 руб.', 'Снятие: -200 руб.']
+account.withdraw(5000)        # ValueError: Недостаточно средств
+account.deposit(-100)         # ValueError: Сумма должна быть больше 0
+
+# Замечания при проверке:
+# 1. Использовать raise ValueError вместо молчаливого if (чтобы ошибка не проходила тихо)
+# 2. Проверка amount <= 0 (не < 0), иначе deposit(0) добавит 0 руб. без ошибки
+# 3. Без пробела перед скобками: def balance(self), не def balance (self)
